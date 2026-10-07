@@ -4,11 +4,15 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useEffect, useState } from 'react';
 import { useColorScheme } from 'react-native';
 
+import { useNotificationResponseListener } from '@/features/notifications/use-notification-response';
+
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
   const [queryClient] = useState(() => new QueryClient());
+
+  useNotificationResponseListener();
 
   useEffect(() => {
     SplashScreen.hideAsync();

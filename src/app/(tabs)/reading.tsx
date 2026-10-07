@@ -4,12 +4,17 @@ import { ActivityIndicator, FlatList, Pressable, ScrollView, StyleSheet } from '
 
 import { ScreenContainer } from '@/components/screen-container';
 import { ThemedText } from '@/components/themed-text';
+import { ThemedView } from '@/components/themed-view';
 import { useSession } from '@/features/auth/use-session';
 import { BookCard } from '@/features/books/book-card';
 import { booksStrings } from '@/features/books/strings';
 import { useBooks } from '@/features/books/use-books';
-import { useTheme } from '@/hooks/use-theme';
 import { quotesStrings } from '@/features/quotes/strings';
+import { watchStrings } from '@/features/sources/strings';
+import { useWatchSources } from '@/features/sources/use-watch-sources';
+import { WatchCard } from '@/features/sources/watch-card';
+import { WatchForm } from '@/features/sources/watch-form';
+import { useTheme } from '@/hooks/use-theme';
 import type { SourceStatus } from '@/types/database';
 
 const TABS: { status: SourceStatus; label: string }[] = [
@@ -21,9 +26,12 @@ const TABS: { status: SourceStatus; label: string }[] = [
 export default function ReadingScreen() {
   const theme = useTheme();
   const { session, loading: sessionLoading } = useSession();
+  const [contentType, setContentType] = useState<'book' | 'watch'>('book');
   const [status, setStatus] = useState<SourceStatus>('ongoing');
+  const [showWatchForm, setShowWatchForm] = useState(false);
   const userId = session?.user.id;
-  const { data: books, isLoading, isError } = useBooks(userId, status);
+  const books = useBooks(userId, status);
+  const watch = useWatchSources(userId, status);
 
   if (sessionLoading) {
     return (
@@ -45,6 +53,25 @@ export default function ReadingScreen() {
     <ScreenContainer style={styles.container}>
       <ThemedText type="title">독서</ThemedText>
 
+      <ThemedView style={styles.contentTypeRow}>
+        <Pressable
+          onPress={() => setContentType('book')}
+          style={[
+            styles.tabChip,
+            { backgroundColor: contentType === 'book' ? theme.backgroundSelected : theme.backgroundElement },
+          ]}>
+          <ThemedText type="small">{watchStrings.toggleBook}</ThemedText>
+        </Pressable>
+        <Pressable
+          onPress={() => setContentType('watch')}
+          style={[
+            styles.tabChip,
+            { backgroundColor: contentType === 'watch' ? theme.backgroundSelected : theme.backgroundElement },
+          ]}>
+          <ThemedText type="small">{watchStrings.toggleWatch}</ThemedText>
+        </Pressable>
+      </ThemedView>
+
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -61,26 +88,52 @@ export default function ReadingScreen() {
             <ThemedText type="small">{tab.label}</ThemedText>
           </Pressable>
         ))}
-        <Pressable
-          onPress={() => router.push('/book/search')}
-          style={[styles.tabChip, { backgroundColor: theme.backgroundElement }]}>
-          <ThemedText type="small">{booksStrings.addNew}</ThemedText>
-        </Pressable>
+        {contentType === 'book' ? (
+          <Pressable
+            onPress={() => router.push('/book/search')}
+            style={[styles.tabChip, { backgroundColor: theme.backgroundElement }]}>
+            <ThemedText type="small">{booksStrings.addNew}</ThemedText>
+          </Pressable>
+        ) : (
+          <Pressable
+            onPress={() => setShowWatchForm(true)}
+            style={[styles.tabChip, { backgroundColor: theme.backgroundElement }]}>
+            <ThemedText type="small">{watchStrings.addNew}</ThemedText>
+          </Pressable>
+        )}
       </ScrollView>
 
-      {isLoading ? (
+      {contentType === 'watch' && showWatchForm ? (
+        <WatchForm userId={userId} onDone={() => setShowWatchForm(false)} />
+      ) : contentType === 'book' ? (
+        books.isLoading ? (
+          <ActivityIndicator />
+        ) : books.isError ? (
+          <ThemedText style={styles.error}>{booksStrings.loadError}</ThemedText>
+        ) : (
+          <FlatList
+            data={books.data}
+            keyExtractor={(item) => item.id}
+            numColumns={3}
+            columnWrapperStyle={styles.row}
+            contentContainerStyle={styles.grid}
+            renderItem={({ item }) => <BookCard book={item} />}
+            ListEmptyComponent={<ThemedText themeColor="textSecondary">{booksStrings.emptyList}</ThemedText>}
+          />
+        )
+      ) : watch.isLoading ? (
         <ActivityIndicator />
-      ) : isError ? (
-        <ThemedText style={styles.error}>{booksStrings.loadError}</ThemedText>
+      ) : watch.isError ? (
+        <ThemedText style={styles.error}>{watchStrings.loadError}</ThemedText>
       ) : (
         <FlatList
-          data={books}
+          data={watch.data}
           keyExtractor={(item) => item.id}
           numColumns={3}
           columnWrapperStyle={styles.row}
           contentContainerStyle={styles.grid}
-          renderItem={({ item }) => <BookCard book={item} />}
-          ListEmptyComponent={<ThemedText themeColor="textSecondary">{booksStrings.emptyList}</ThemedText>}
+          renderItem={({ item }) => <WatchCard source={item} />}
+          ListEmptyComponent={<ThemedText themeColor="textSecondary">{watchStrings.emptyList}</ThemedText>}
         />
       )}
     </ScreenContainer>
@@ -93,10 +146,9 @@ const styles = StyleSheet.create({
     padding: 24,
     gap: 12,
   },
-  header: {
+  contentTypeRow: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    gap: 8,
   },
   tabs: {
     flexGrow: 0,

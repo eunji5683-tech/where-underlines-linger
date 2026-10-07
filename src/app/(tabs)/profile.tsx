@@ -5,6 +5,7 @@ import { ThemedText } from '@/components/themed-text';
 import { AuthForm } from '@/features/auth/auth-form';
 import { authStrings } from '@/features/auth/strings';
 import { useSession } from '@/features/auth/use-session';
+import { ReviewTimeForm } from '@/features/profile/review-time-form';
 import { useTheme } from '@/hooks/use-theme';
 import { supabase } from '@/lib/supabase';
 
@@ -32,6 +33,7 @@ export default function ProfileScreen() {
     <ScreenContainer style={styles.container}>
       <ThemedText type="title">나</ThemedText>
       <ThemedText>{session.user.email}</ThemedText>
+      <ReviewTimeForm userId={session.user.id} />
       <Pressable
         style={[styles.button, { backgroundColor: theme.backgroundElement }]}
         onPress={() => supabase.auth.signOut()}>
