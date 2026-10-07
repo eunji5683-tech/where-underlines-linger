@@ -1,5 +1,5 @@
 import { router, useLocalSearchParams } from 'expo-router';
-import { ActivityIndicator, Pressable, StyleSheet } from 'react-native';
+import { ActivityIndicator, Pressable, ScrollView, StyleSheet } from 'react-native';
 
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
@@ -7,6 +7,7 @@ import { useSession } from '@/features/auth/use-session';
 import { QuoteEditForm } from '@/features/quotes/quote-edit-form';
 import { quotesStrings } from '@/features/quotes/strings';
 import { useQuote } from '@/features/quotes/use-quote';
+import { ThoughtList } from '@/features/thoughts/thought-list';
 
 export default function QuoteDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -34,12 +35,15 @@ export default function QuoteDetailScreen() {
           <ThemedText themeColor="textSecondary">{quotesStrings.notFound}</ThemedText>
         </ThemedView>
       ) : (
-        <>
+        <ScrollView contentContainerStyle={styles.scrollContent}>
           <ThemedText type="title" style={styles.title}>
             {quotesStrings.editTitle}
           </ThemedText>
           <QuoteEditForm userId={session.user.id} quote={quote} />
-        </>
+          <ThemedView style={styles.thoughtSection}>
+            <ThoughtList userId={session.user.id} quoteId={quote.id} />
+          </ThemedView>
+        </ScrollView>
       )}
     </ThemedView>
   );
@@ -54,6 +58,12 @@ const styles = StyleSheet.create({
     paddingTop: 16,
   },
   title: {
+    paddingHorizontal: 24,
+  },
+  scrollContent: {
+    paddingBottom: 32,
+  },
+  thoughtSection: {
     paddingHorizontal: 24,
   },
   centered: {
