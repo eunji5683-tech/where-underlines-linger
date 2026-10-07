@@ -1,0 +1,56 @@
+export const booksStrings = {
+  tabOngoing: '읽는 중',
+  tabDone: '완독',
+  tabWish: '위시리스트',
+  addNew: '+ 책 추가',
+  emptyList: '아직 등록한 책이 없어요.',
+  loadError: '책을 불러오지 못했어요.',
+
+  searchPlaceholder: '책 제목 검색',
+  searchButton: '검색',
+  searchError: '검색하지 못했어요. 다시 시도해주세요.',
+  noResults: '검색 결과가 없어요.',
+  searching: '검색 중...',
+
+  totalPagesLabel: '총 쪽수',
+  totalPagesPlaceholder: '예: 320',
+  totalPagesRequired: '총 쪽수를 입력해주세요.',
+  registerAsOngoing: '읽는 중으로 등록',
+  registerAsWish: '위시리스트에 담기',
+  registerError: '등록하지 못했어요. 다시 시도해주세요.',
+
+  back: '← 뒤로',
+  bookNotFound: '책을 찾을 수 없어요.',
+  progressLabel: '진행률',
+  currentPageOf: (current: number, total: number) => `${current} / ${total}쪽`,
+
+  timerStart: '독서 시작',
+  timerEnd: '독서 종료',
+  timerRunning: '독서 중...',
+  currentPagePrompt: '지금 몇 쪽까지 읽었어요?',
+  sessionSaveButton: '기록 저장',
+  sessionSaveError: '기록을 저장하지 못했어요. 다시 시도해주세요.',
+  pageRequired: '쪽수를 입력해주세요.',
+  pageTooSmall: '이전 쪽수보다 작을 수 없어요.',
+
+  markDoneButton: '완독으로 표시',
+  markDoneError: '표시하지 못했어요. 다시 시도해주세요.',
+
+  editButton: '수정',
+  titleRequired: '제목을 입력해주세요.',
+  titleLabel: '제목',
+  creatorLabel: '저자',
+  saveButton: '저장',
+  cancelButton: '취소',
+  updateError: '수정하지 못했어요. 다시 시도해주세요.',
+
+  deleteButton: '삭제',
+  deleteConfirmTitle: '이 책을 삭제할까요?',
+  deleteConfirmMessage: '책을 삭제해도 모은 문장은 남지만, 출처 연결은 사라져요.',
+  deleteConfirmOk: '삭제',
+  deleteConfirmCancel: '취소',
+  deleteError: '삭제하지 못했어요. 다시 시도해주세요.',
+
+  quotesFromBookTitle: '이 책에서 모은 문장',
+  quotesEmpty: '아직 모은 문장이 없어요.',
+};

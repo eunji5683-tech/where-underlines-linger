@@ -1,6 +1,7 @@
 import { router, useLocalSearchParams } from 'expo-router';
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet } from 'react-native';
 
+import { ScreenContainer } from '@/components/screen-container';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { useSession } from '@/features/auth/use-session';
@@ -17,7 +18,7 @@ export default function QuoteDetailScreen() {
   const loading = sessionLoading || quoteLoading;
 
   return (
-    <ThemedView style={styles.screen}>
+    <ScreenContainer style={styles.screen}>
       <Pressable onPress={() => router.back()} style={styles.backButton}>
         <ThemedText>{quotesStrings.back}</ThemedText>
       </Pressable>
@@ -45,7 +46,7 @@ export default function QuoteDetailScreen() {
           </ThemedView>
         </ScrollView>
       )}
-    </ThemedView>
+    </ScreenContainer>
   );
 }
 

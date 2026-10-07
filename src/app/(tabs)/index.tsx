@@ -1,7 +1,7 @@
 import { ActivityIndicator, ScrollView, StyleSheet } from 'react-native';
 
+import { ScreenContainer } from '@/components/screen-container';
 import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
 import { useSession } from '@/features/auth/use-session';
 import { quotesStrings } from '@/features/quotes/strings';
 import { MomentInput } from '@/features/thoughts/moment-input';
@@ -12,26 +12,28 @@ export default function HomeScreen() {
 
   if (loading) {
     return (
-      <ThemedView style={styles.centered}>
+      <ScreenContainer style={styles.centered}>
         <ActivityIndicator />
-      </ThemedView>
+      </ScreenContainer>
     );
   }
 
   if (!session) {
     return (
-      <ThemedView style={styles.centered}>
+      <ScreenContainer style={styles.centered}>
         <ThemedText themeColor="textSecondary">{quotesStrings.loginRequired}</ThemedText>
-      </ThemedView>
+      </ScreenContainer>
     );
   }
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <ThemedText type="title">홈</ThemedText>
-      <MomentInput userId={session.user.id} />
-      <UnlinkedThoughtList userId={session.user.id} />
-    </ScrollView>
+    <ScreenContainer>
+      <ScrollView contentContainerStyle={styles.container}>
+        <ThemedText type="title">홈</ThemedText>
+        <MomentInput userId={session.user.id} />
+        <UnlinkedThoughtList userId={session.user.id} />
+      </ScrollView>
+    </ScreenContainer>
   );
 }
 

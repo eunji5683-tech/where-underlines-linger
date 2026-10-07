@@ -1,7 +1,7 @@
 import { ActivityIndicator, StyleSheet } from 'react-native';
 
+import { ScreenContainer } from '@/components/screen-container';
 import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
 import { useSession } from '@/features/auth/use-session';
 import { QuoteForm } from '@/features/quotes/quote-form';
 import { quotesStrings } from '@/features/quotes/strings';
@@ -11,21 +11,25 @@ export default function AddScreen() {
 
   if (loading) {
     return (
-      <ThemedView style={styles.centered}>
+      <ScreenContainer style={styles.centered}>
         <ActivityIndicator />
-      </ThemedView>
+      </ScreenContainer>
     );
   }
 
   if (!session) {
     return (
-      <ThemedView style={styles.centered}>
+      <ScreenContainer style={styles.centered}>
         <ThemedText themeColor="textSecondary">{quotesStrings.loginRequired}</ThemedText>
-      </ThemedView>
+      </ScreenContainer>
     );
   }
 
-  return <QuoteForm userId={session.user.id} />;
+  return (
+    <ScreenContainer>
+      <QuoteForm userId={session.user.id} />
+    </ScreenContainer>
+  );
 }
 
 const styles = StyleSheet.create({

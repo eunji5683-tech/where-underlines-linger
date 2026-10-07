@@ -1,7 +1,7 @@
 import { ActivityIndicator, Pressable, StyleSheet } from 'react-native';
 
+import { ScreenContainer } from '@/components/screen-container';
 import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
 import { AuthForm } from '@/features/auth/auth-form';
 import { authStrings } from '@/features/auth/strings';
 import { useSession } from '@/features/auth/use-session';
@@ -14,18 +14,22 @@ export default function ProfileScreen() {
 
   if (loading) {
     return (
-      <ThemedView style={styles.centered}>
+      <ScreenContainer style={styles.centered}>
         <ActivityIndicator />
-      </ThemedView>
+      </ScreenContainer>
     );
   }
 
   if (!session) {
-    return <AuthForm />;
+    return (
+      <ScreenContainer>
+        <AuthForm />
+      </ScreenContainer>
+    );
   }
 
   return (
-    <ThemedView style={styles.container}>
+    <ScreenContainer style={styles.container}>
       <ThemedText type="title">나</ThemedText>
       <ThemedText>{session.user.email}</ThemedText>
       <Pressable
@@ -33,7 +37,7 @@ export default function ProfileScreen() {
         onPress={() => supabase.auth.signOut()}>
         <ThemedText type="smallBold">{authStrings.signOutButton}</ThemedText>
       </Pressable>
-    </ThemedView>
+    </ScreenContainer>
   );
 }
 

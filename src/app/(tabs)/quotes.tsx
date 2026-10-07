@@ -1,8 +1,8 @@
 import { useMemo, useState } from 'react';
 import { ActivityIndicator, FlatList, StyleSheet, TextInput } from 'react-native';
 
+import { ScreenContainer } from '@/components/screen-container';
 import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
 import { useSession } from '@/features/auth/use-session';
 import { quotesStrings } from '@/features/quotes/strings';
 import { useQuotes } from '@/features/quotes/use-quotes';
@@ -33,22 +33,22 @@ export default function QuotesScreen() {
 
   if (sessionLoading) {
     return (
-      <ThemedView style={styles.centered}>
+      <ScreenContainer style={styles.centered}>
         <ActivityIndicator />
-      </ThemedView>
+      </ScreenContainer>
     );
   }
 
   if (!session || !userId) {
     return (
-      <ThemedView style={styles.centered}>
+      <ScreenContainer style={styles.centered}>
         <ThemedText themeColor="textSecondary">{quotesStrings.loginRequired}</ThemedText>
-      </ThemedView>
+      </ScreenContainer>
     );
   }
 
   return (
-    <ThemedView style={styles.container}>
+    <ScreenContainer style={styles.container}>
       <ThemedText type="title">문장함</ThemedText>
 
       <TextInput
@@ -83,7 +83,7 @@ export default function QuotesScreen() {
           }
         />
       )}
-    </ThemedView>
+    </ScreenContainer>
   );
 }
 
