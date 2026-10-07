@@ -9,22 +9,29 @@ import { Platform } from 'react-native';
 
 export const Colors = {
   light: {
-    text: '#000000',
-    background: '#ffffff',
-    backgroundElement: '#F0F0F3',
-    backgroundSelected: '#E0E1E6',
-    textSecondary: '#60646C',
+    text: '#3A332E',
+    background: '#FBF5EC',
+    backgroundElement: '#F3E2DC',
+    backgroundSelected: '#D9E7DC',
+    textSecondary: '#8C8077',
   },
   dark: {
-    text: '#ffffff',
-    background: '#000000',
-    backgroundElement: '#212225',
-    backgroundSelected: '#2E3135',
-    textSecondary: '#B0B4BA',
+    text: '#F3ECE3',
+    background: '#241F1B',
+    backgroundElement: '#3A2F2B',
+    backgroundSelected: '#36403A',
+    textSecondary: '#B4A99F',
   },
 } as const;
 
 export type ThemeColor = keyof typeof Colors.light & keyof typeof Colors.dark;
+
+// 배경에 깔리는 번진 물감 느낌의 얼룩(watercolor wash) 색상.
+// ScreenContainer에서 큰 반투명 원으로 그려 종이 위에 수채 물감이 스민 듯한 질감을 낸다.
+export const WatercolorWash = {
+  light: ['#F3C9B855', '#C9E3D355', '#C7D9EE55'] as const,
+  dark: ['#5A3F3340', '#2E4A3C40', '#2C3C5240'] as const,
+};
 
 export const Fonts = Platform.select({
   ios: {
