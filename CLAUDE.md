@@ -63,6 +63,9 @@ src/
 - 친구 공유
 - AI 분석
 
+## 배포 전 TODO
+- Supabase Authentication → Providers → Email의 "Confirm email"을 다시 켜기 (지금은 개발 편의를 위해 꺼둔 상태)
+
 ## 완료 기준
 - 앱이 실행된다.
 - 타입 오류가 없다.
