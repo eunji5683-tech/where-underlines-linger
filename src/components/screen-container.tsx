@@ -1,4 +1,4 @@
-import { Keyboard, Pressable, StyleSheet, View } from 'react-native';
+import { Keyboard, Platform, Pressable, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { ViewProps } from 'react-native';
 
@@ -18,9 +18,15 @@ export function ScreenContainer({ style, children, ...props }: ViewProps) {
         <View style={[styles.blob, styles.blobTwo, { backgroundColor: wash[1] }]} />
         <View style={[styles.blob, styles.blobThree, { backgroundColor: wash[2] }]} />
       </View>
-      <Pressable style={[{ flex: 1 }, style]} onPress={Keyboard.dismiss} {...props}>
-        {children}
-      </Pressable>
+      {Platform.OS === 'web' ? (
+        <View style={[{ flex: 1 }, style]} {...props}>
+          {children}
+        </View>
+      ) : (
+        <Pressable style={[{ flex: 1 }, style]} onPress={Keyboard.dismiss} {...props}>
+          {children}
+        </Pressable>
+      )}
     </SafeAreaView>
   );
 }
