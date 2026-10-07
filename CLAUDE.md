@@ -66,6 +66,9 @@ src/
 ## 배포 전 TODO
 - Supabase Authentication → Providers → Email의 "Confirm email"을 다시 켜기 (지금은 개발 편의를 위해 꺼둔 상태)
 
+## 보류된 것 (나중에 다시 다룰 것)
+- 사진 OCR: 아이폰 + Windows PC라 기기 내 OCR을 넣으려면 Apple Developer Program(유료) 가입이 필요하고, 클라우드 OCR은 신용카드 등록이 필요해서 지금 단계에서는 보류. 당분간 텍스트 직접 입력(F2)만으로 진행하고, 나중에 비용·가입 부담 없는 방법이 생기면 다시 다룬다.
+
 ## 완료 기준
 - 앱이 실행된다.
 - 타입 오류가 없다.

@@ -1,0 +1,18 @@
+export const quotesStrings = {
+  textPlaceholder: '문장을 입력하세요',
+  saveButton: '저장',
+  textRequired: '문장을 입력해주세요.',
+  saveError: '문장을 저장하지 못했어요. 다시 시도해주세요.',
+  loadError: '문장을 불러오지 못했어요.',
+  searchPlaceholder: '문장 검색',
+  emptyList: '아직 저장한 문장이 없어요.',
+  emptyFiltered: '조건에 맞는 문장이 없어요.',
+  loginRequired: '로그인 후 이용할 수 있어요. "나" 탭에서 로그인해주세요.',
+  saved: '저장했어요!',
+  editTitle: '문장 수정',
+  updateButton: '수정 완료',
+  updateError: '수정하지 못했어요. 다시 시도해주세요.',
+  updated: '수정했어요!',
+  back: '← 뒤로',
+  notFound: '문장을 찾을 수 없어요.',
+};
